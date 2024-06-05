@@ -1,0 +1,21 @@
+.html {
+    width: 780px;
+    height: 460px;
+    overflow: auto;
+}
+
+.container {
+    padding: 32px
+}
+
+.title {
+    margin: 0;
+    margin-bottom: 16px;
+}
+
+.list {
+    margin: 0;
+    padding-left: 18px;
+    text-align: justify;
+    font-size: 1.5rem;
+}

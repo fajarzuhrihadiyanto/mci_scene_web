@@ -1,0 +1,19 @@
+.html {
+    width: 780px;
+    height: 460px;
+    overflow: auto;
+    transition: opacity 1s;
+}
+
+.container {
+    padding: 32px
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    text-align: left;
+    font-size: 1.5rem;
+}
