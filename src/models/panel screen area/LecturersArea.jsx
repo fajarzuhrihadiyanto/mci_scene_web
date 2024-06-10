@@ -7,6 +7,7 @@ import PanelScreen from "./PanelScreen"
 import { FOCUS_LECTURER } from "../../constants"
 import Tooltip from "../../components/Tootlip"
 import LecturerPage from "../../html/LecturerPage"
+import { useResponsiveScreen } from "../../utils"
 
 const LecturersArea = ({ nodes, materials }) => {
     // get the state and setter from the store
@@ -14,6 +15,7 @@ const LecturersArea = ({ nodes, materials }) => {
     const setFocusTarget = useMainStore.useSetFocusTarget()
     const setCameraPosition = useMainStore.useSetCameraPosition()
     const setControlsTargetOffset = useMainStore.useSetControlsTargetOffset()
+    const { isMobile } = useResponsiveScreen()
 
     const [isHovered, setIsHovered] = React.useState(false)
 
@@ -29,9 +31,10 @@ const LecturersArea = ({ nodes, materials }) => {
     const onClick = React.useCallback((e) => {
         e.stopPropagation()
         if (focusTarget === null) {
+            const cameraPosition = isMobile ? [0.126, 1.731, -2] : [0.126, 1.731, -2.5]
             setIsHovered(false)
             setFocusTarget(FOCUS_LECTURER)
-            setCameraPosition([0.126, 1.731, -2.5])
+            setCameraPosition(cameraPosition)
             setControlsTargetOffset([0, 0, -.01])
         }
     }, [focusTarget])

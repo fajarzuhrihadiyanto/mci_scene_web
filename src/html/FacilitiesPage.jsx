@@ -12,6 +12,7 @@ const FacilitiesPage = () => {
             className={styles.html}
             >
             <div className={styles.container}>
+                <h1 className={styles.title}>Fasilitas</h1>
                 <ul className={styles.list}>
                 <li>PC Client (Intel Core i7 Gen 12, Ram 32GB, SSD 1TB, Monitor 24″ Curved).</li>
                 <li>Android TV 65″.</li>

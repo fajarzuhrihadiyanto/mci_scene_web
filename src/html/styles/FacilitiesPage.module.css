@@ -9,6 +9,12 @@
     padding: 32px
 }
 
+.title {
+    font-size: 3rem;
+    margin: 0;
+    margin-bottom: 16px;
+}
+
 .list {
     display: flex;
     flex-direction: column;

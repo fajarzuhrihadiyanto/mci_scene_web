@@ -6,6 +6,7 @@ import useMainStore from "../../store/useMainStore"
 import { FOCUS_SUBJECT } from "../../constants"
 import Tooltip from "../../components/Tootlip"
 import SubjectPage from "../../html/SubjectPage"
+import { useResponsiveScreen } from "../../utils"
 
 const SubjectPanelArea = ({ nodes, materials }) => {
     // get the state and setter from the store
@@ -13,6 +14,7 @@ const SubjectPanelArea = ({ nodes, materials }) => {
     const setFocusTarget = useMainStore.useSetFocusTarget()
     const setCameraPosition = useMainStore.useSetCameraPosition()
     const setControlsTargetOffset = useMainStore.useSetControlsTargetOffset()
+    const { isMobile } = useResponsiveScreen()
 
     const [isHovered, setIsHovered] = React.useState(false)
 
@@ -28,9 +30,10 @@ const SubjectPanelArea = ({ nodes, materials }) => {
     const onClick = React.useCallback((e) => {
         e.stopPropagation()
         if (focusTarget === null) {
+            const cameraPosition = isMobile ? [-0.536, 2.356, 1.909] : [-0.536, 2.656, 2.509]
             setIsHovered(false)
             setFocusTarget(FOCUS_SUBJECT)
-            setCameraPosition([-0.536, 2.656, 2.509])
+            setCameraPosition(cameraPosition)
             setControlsTargetOffset([0, 0.005, 0.01])
         }
     }, [focusTarget])
