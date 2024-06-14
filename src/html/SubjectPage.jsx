@@ -2,15 +2,16 @@ import React from "react"
 import { Html } from "@react-three/drei"
 
 import styles from './styles/SubjectPage.module.css'
-import { SUBJECT } from "../data/subject"
+import useDataStore from "../store/dataStore"
 
 const SubjectList = ({ onClick }) => {
+    const subjects = useDataStore.useSubjects()
     return (
         <>
             <h1 className={styles.title}>Daftar Mata Kuliah</h1>
             <div className={styles.grid_container}>
-                {SUBJECT.map((subject, index) => (
-                    <button className={styles.button} key={index} onClick={() => onClick(index)}>{subject.title}</button>
+                {subjects.map((subject, index) => (
+                    <button className={styles.button} key={index} onClick={() => onClick(index)}>{subject.name}</button>
                 ))}
             </div>
         </>
@@ -20,8 +21,8 @@ const SubjectList = ({ onClick }) => {
 const SubjectDetail = ({ subject, onClick }) => {
     return (
         <>
-            <h1 className={styles.title}>{subject.title}</h1>
-            <p className={styles.description}>Mata kuliah {subject.mandatory ? 'wajib' : 'pilihan'}</p>
+            <h1 className={styles.title}>{subject.name}</h1>
+            <p className={styles.description}>Mata kuliah {subject.is_compulsory ? 'wajib' : 'pilihan'}</p>
             <div>
                 <h2>Deskripsi Mata Kuliah</h2>
                 <p className={styles.description}>{subject.description}</p>
@@ -44,6 +45,7 @@ const SubjectPage = () => {
 
     // Get state and setter from the store
     const [subjectId, setSubjectId] = React.useState(-1)
+    const subjects = useDataStore.useSubjects()
 
     const onClick = (id) => {
         setSubjectId(id)
@@ -62,7 +64,7 @@ const SubjectPage = () => {
             <div className={styles.container}>
                 {subjectId === -1
                     ? <SubjectList onClick={onClick}/>
-                    : <SubjectDetail subject={SUBJECT[subjectId]} onClick={onCancel}/>
+                    : <SubjectDetail subject={subjects[subjectId]} onClick={onCancel}/>
                 }
             </div>
         </Html>

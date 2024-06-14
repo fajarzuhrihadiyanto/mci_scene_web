@@ -1,8 +1,10 @@
 import { Html } from "@react-three/drei"
 
 import styles from './styles/FacilitiesPage.module.css'
+import useDataStore from "../store/dataStore"
 
 const FacilitiesPage = () => {
+    const facilities = useDataStore.useFacilities()
     return (
         <Html
             transform
@@ -14,9 +16,7 @@ const FacilitiesPage = () => {
             <div className={styles.container}>
                 <h1 className={styles.title}>Fasilitas</h1>
                 <ul className={styles.list}>
-                <li>PC Client (Intel Core i7 Gen 12, Ram 32GB, SSD 1TB, Monitor 24″ Curved).</li>
-                <li>Android TV 65″.</li>
-                <li>Laptop High End</li>
+                    {facilities.map((facility, index) => <li key={index}>{facility.name}</li>)}
                 </ul>
             </div>
         </Html>

@@ -2,20 +2,22 @@ import React from "react"
 import { Html } from "@react-three/drei"
 
 import styles from './styles/LecturerPage.module.css'
-import { LECTURERS } from "../data/lecturers"
+import useDataStore from "../store/dataStore"
 
 const LecturerPage = () => {
+    const professors = useDataStore.useProfessors()
+
     const [lecturerId, setLecturerId] = React.useState(0)
-    const lecturer = LECTURERS[lecturerId]
+    const lecturer = professors[lecturerId]
     const screenRef = React.useRef()
 
     const next = React.useCallback(() => {
-        setLecturerId((lecturerId + 1) % LECTURERS.length)
-    }, [lecturerId])
+        setLecturerId((lecturerId + 1) % professors.length)
+    }, [lecturerId, professors.length])
 
     const previous = React.useCallback(() => {
-        setLecturerId((lecturerId - 1 + LECTURERS.length) % LECTURERS.length)
-    }, [lecturerId])
+        setLecturerId((lecturerId - 1 + professors.length) % professors.length)
+    }, [lecturerId, professors.length])
 
     React.useEffect(() => {
         if (screenRef.current) {
@@ -32,30 +34,30 @@ const LecturerPage = () => {
             >
             <div className={`${styles.container}`}>
                 <div className={styles.image_container}>
-                    <img className={styles.image} src={lecturer?.pictureUrl} alt={lecturer?.name}/>
+                    <img className={styles.image} src={lecturer?.photo_url} alt={lecturer?.fullname}/>
                 </div>
                 <div className={styles.data_container}>
-                    <h1 className={styles.title}>{lecturer?.name}</h1>
-                    <p>{lecturer?.isHeadLab && 'Kepala Laboratorium'}</p>
-                    <p>NIDN : {lecturer?.nidn}</p>
+                    <h1 className={styles.title}>{lecturer?.fullname}</h1>
+                    <p>{lecturer?.is_head_lab && 'Kepala Laboratorium'}</p>
+                    <p>NIDN : {lecturer?.NIDN}</p>
                     <p>Email : {lecturer?.email}</p>
-                    <p>Pendidikan terakhir : {lecturer?.last_education}</p>
+                    <p>Pendidikan terakhir : {lecturer?.latest_education}</p>
                     <p>Jabatan terakhir</p>
                     <ul>
-                        {lecturer?.last_position.map((position, i) => (
-                            <li key={i}>{position}</li>
+                        {lecturer?.position.map((position, i) => (
+                            <li key={i}>{position.name} {position.from_year && `${position.from_year} - ${position.to_year || 'Sekarang'}`}</li>
                         ))}
 
-                        {lecturer?.last_position.length === 0 && '-'}
+                        {lecturer?.position.length === 0 && '-'}
                     </ul>
                 </div>
             </div>
             <div className={styles.publication_container}>
                 <h3>Publikasi</h3>
                 <div className={styles.publication}>
-                    <a href={`https://www.scopus.com/authid/detail.uri?authorId=${lecturer?.scopusId}`} target="_blank" rel="noreferrer">Scopus</a>
-                    <a href={`https://scholar.google.co.id/citations?user=${lecturer?.scholarId}&hl=id`} target="_blank" rel="noreferrer">Google Scholar</a>
-                    <a href={`https://sinta.kemdikbud.go.id/authors/profile/${lecturer?.sintaId}`} target="_blank" rel="noreferrer">Sinta</a>
+                    {lecturer?.publication.scopus_id && <a href={`https://www.scopus.com/authid/detail.uri?authorId=${lecturer?.publication.scopus_id}`} target="_blank" rel="noreferrer">Scopus</a>}
+                    {lecturer?.publication.google_scholar_id && <a href={`https://scholar.google.co.id/citations?user=${lecturer?.publication.google_scholar_id}&hl=id`} target="_blank" rel="noreferrer">Google Scholar</a>}
+                    {lecturer?.publication.sinta_id && <a href={`https://sinta.kemdikbud.go.id/authors/profile/${lecturer?.publication.sinta_id}`} target="_blank" rel="noreferrer">Sinta</a>}
                 </div>
             </div>
             <div className={styles.button_container}>

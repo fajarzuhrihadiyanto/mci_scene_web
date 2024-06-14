@@ -1,9 +1,10 @@
 import { Html } from "@react-three/drei"
 
 import styles from './styles/SubjectPage.module.css'
-import { RESEARCH } from "../data/research"
+import useDataStore from "../store/dataStore"
 
 const ResearchPage = () => {
+    const research = useDataStore.useResearch()
     return (
         <Html
             transform
@@ -14,8 +15,8 @@ const ResearchPage = () => {
             <div className={styles.container}>
                 <h1 className={styles.title}>Daftar Penelitian</h1>
                 <ul className={styles.list}>
-                    {RESEARCH.map((research, index) => (
-                        <li key={index}>{research.year} - {research.title}</li>
+                    {research.map((research, index) => (
+                        <li key={index}>{research.year} - {research.research_type} {research.title} {research.professor_fullname && `, ${research.professor_fullname}`}</li>
                     ))}
                 </ul>
             </div>
